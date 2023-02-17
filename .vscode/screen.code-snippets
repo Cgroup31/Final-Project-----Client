@@ -1,0 +1,36 @@
+{
+  "reactNativeComponent": {
+    "prefix": "src",
+    "body": [
+      "import React from 'react';",
+      "import { View, Image, StyleSheet } from 'react-native';",
+      "import { TopNavigation, useTheme } from '@ui-kitten/components';",
+      "import { useNavigation } from '@react-navigation/native';",
+      "import { useTranslation } from 'react-i18next';",
+      "import { useLayout } from 'hooks';",
+      "",
+      "import { Container, Content, Text } from 'components';",
+      "",
+      "const ${1:NameScreen} = React.memo(() => {",
+      "  const theme = useTheme();",
+      "  const { goBack } = useNavigation();",
+      "  const { t } = useTranslation(['common']);",
+      "  const { height, width, top, bottom } = useLayout();",
+      "",
+      "  return (",
+      "    <Container>",
+      "      <TopNavigation />",
+      "      <Content>",
+      "        <Text>${1:NameScreen}</Text>",
+      "      </Content>",
+      "    </Container>",
+      "  );",
+      "});",
+      "",
+      "export default ${1:NameScreen};",
+      "",
+      "const styles = StyleSheet.create({});"
+    ],
+    "description": "Dakota Component"
+  }
+}
