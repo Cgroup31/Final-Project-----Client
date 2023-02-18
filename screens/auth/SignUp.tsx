@@ -31,7 +31,7 @@ const SignUp = memo(() => {
   const { navigate, goBack } = useNavigation<NavigationProp<RootStackParamList>>();
   const {
     control,
-    //handleSubmit,
+    handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
 
