@@ -46,6 +46,7 @@ const SignUp = memo(() => {
 
   return (
     <AuthLayout
+    
       show_logo
       title="הצטרפי לקהילה"
       bottom_content={{
@@ -78,6 +79,8 @@ const SignUp = memo(() => {
           name="name"
           rules={{ required: true, minLength: 8 }}
         />
+              
+
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -163,45 +166,8 @@ const SignUp = memo(() => {
           )}
           name="address"
         />
-        {/* <Controller
-
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-            style={styles.DatePicker}
-              onBlur={onBlur}
-              status={errors.password ? 'danger' : 'primary'}
-              placeholder="בחרי תאריך לידה"
-              max={maxDate}
-              min={minDate}
-              onSelect={(nextDate) => setDate(nextDate)}
-              //backdropStyle={styles.DatePickerBack}
-              accessoryRight={CalendarIcon}
-              size='medium'
-              placement={'right start'}
-            />
-          )}
-          name="birthday"
-        /> */}
-        {/* <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-              style={styles.DatePicker}
-              date={date}
-              
-              max={maxDate}
-              min={minDate}
-              size="small"
-              backdropStyle={styles.DatePickerBack}
-              onSelect={(nextDate) => setDate(nextDate)}
-            />
-          )}
-          name="birthday"
-        /> */}
-
         <Button style={styles.button} children="הרשמה" onPress={() => setRegistered(true)} />
-      </ScrollView>
+        </ScrollView>
     </AuthLayout>
   );
 });

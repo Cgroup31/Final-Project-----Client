@@ -6,7 +6,6 @@ import { useNavigation, NavigationProp, CommonActions } from '@react-navigation/
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import AuthLayout from 'components/AuthLayout';
-
 import { rulePassword } from 'utils/rules';
 import { RootStackParamList } from 'navigation/types';
 
@@ -81,6 +80,7 @@ const SignIn = React.memo(() => {
             onChangeText={onChange}
             status={errors.email ? 'danger' : 'primary'}
             placeholder="אימייל"
+            textAlign='right'
             //caption={errors.email ? t('numberFormatError').toString() : ''}
           />
         )}
@@ -98,7 +98,7 @@ const SignIn = React.memo(() => {
             onChangeText={onChange}
             status={errors.password ? 'danger' : 'primary'}
             placeholder="סיסמה"
-
+            textAlign='right'
             //caption={errors.password ? t('numberFormatError').toString() : ''}
           />
         )}
@@ -153,9 +153,11 @@ export default SignIn;
 const styles = StyleSheet.create({
   input: {
     marginTop: 32,
+    textAlign: 'right',
+
   },
   inputPassword: {
-    marginTop: 16,
+    marginTop: 32,
     textAlign: 'right',
   },
   button: {
