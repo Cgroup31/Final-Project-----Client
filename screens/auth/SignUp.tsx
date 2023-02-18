@@ -31,7 +31,7 @@ const SignUp = memo(() => {
   const { navigate, goBack } = useNavigation<NavigationProp<RootStackParamList>>();
   const {
     control,
-    handleSubmit,
+    //handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -39,28 +39,27 @@ const SignUp = memo(() => {
   // const CalendarIcon = (props) => (
   //   <Icon {...props} name='calendar'/>
   // );
-  
+
   useEffect(() => {
     setRegistered(false);
   }, []);
 
   return (
-    
-      <AuthLayout
-        show_logo
-        title="הצטרפי לקהילה"
-        bottom_content={{
-          title: ["כבר יש לך חשבון? ", "התחברי"],
-          onPress: () => goBack(),
-        }}
-        is_success={isRegistered}
-        modal_content={{
-          title: t('common:success'),
-          description: t('sign_up:sign_up_success'),
-          title_button: t('sign_up:go_to_shopping_now'),
-          onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
-        }}>
-        <ScrollView>
+    <AuthLayout
+      show_logo
+      title="הצטרפי לקהילה"
+      bottom_content={{
+        title: ['כבר יש לך חשבון? ', 'התחברי'],
+        onPress: () => goBack(),
+      }}
+      is_success={isRegistered}
+      modal_content={{
+        title: t('common:success'),
+        description: t('sign_up:sign_up_success'),
+        title_button: t('sign_up:go_to_shopping_now'),
+        onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
+      }}>
+      <ScrollView>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -202,9 +201,8 @@ const SignUp = memo(() => {
         /> */}
 
         <Button style={styles.button} children="הרשמה" onPress={() => setRegistered(true)} />
-        </ScrollView>
-      </AuthLayout>
-    
+      </ScrollView>
+    </AuthLayout>
   );
 });
 
@@ -220,6 +218,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 32,
-  }
- 
+  },
 });
