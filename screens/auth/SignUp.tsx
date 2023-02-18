@@ -1,32 +1,33 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'components';
-import { Button, Icon, Input, CheckBox, Datepicker } from '@ui-kitten/components';
+import { Button, Icon, Input } from '@ui-kitten/components';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useBoolean } from 'hooks';
-//import DatePicker from 'react-native-datepicker';
 import AuthLayout from 'components/AuthLayout';
 import { RootStackParamList } from 'navigation/types';
 import { rulePassword, ruleRePassword } from 'utils/rules';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { memo } from 'react';
+import { useState, useEffect, memo } from 'react';
+
+import * as ImagePicker from 'expo-image-picker';
 
 interface FormValues {
   email: string;
   password: string;
   re_password: string;
   phone: string;
-  address: string;
   name: string;
+  address: string;
+  picture: string; 
 }
-const maxDate = new Date();
-const minDate = new Date('Janury 01, 1900');
 
 const SignUp = memo(() => {
+  // const [image, setImage] = useState(null);
+
+  const [image, setImage] = useState<string | null>(null);
   const { t } = useTranslation(['common', 'sign_up']);
   const { navigate, goBack } = useNavigation<NavigationProp<RootStackParamList>>();
   const {
@@ -36,30 +37,41 @@ const SignUp = memo(() => {
   } = useForm<FormValues>();
 
   const [isRegistered, setRegistered] = useState<boolean>(false);
-  // const CalendarIcon = (props) => (
-  //   <Icon {...props} name='calendar'/>
-  // );
 
   useEffect(() => {
     setRegistered(false);
   }, []);
 
+  const pickImage = async (): Promise<void> => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
   return (
-    <AuthLayout
-      show_logo
-      title="הצטרפי לקהילה"
-      bottom_content={{
-        title: ['כבר יש לך חשבון? ', 'התחברי'],
-        onPress: () => goBack(),
-      }}
-      is_success={isRegistered}
-      modal_content={{
-        title: t('common:success'),
-        description: t('sign_up:sign_up_success'),
-        title_button: t('sign_up:go_to_shopping_now'),
-        onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
-      }}>
-      <ScrollView>
+    <ScrollView>
+      <AuthLayout
+        show_logo
+        title="הצטרפי לקהילה"
+        bottom_content={{
+          title: ['כבר יש לך חשבון? ', 'התחברי'],
+          onPress: () => goBack(),
+        }}
+        is_success={isRegistered}
+        modal_content={{
+          title: t('common:success'),
+          description: t('sign_up:sign_up_success'),
+          title_button: t('sign_up:go_to_shopping_now'),
+          onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
+        }}>
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -79,7 +91,6 @@ const SignUp = memo(() => {
           name="name"
           rules={{ required: true, minLength: 8 }}
         />
-              
 
         <Controller
           control={control}
@@ -117,6 +128,7 @@ const SignUp = memo(() => {
           name="phone"
           rules={{ required: true, minLength: 9 }}
         />
+
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -136,6 +148,7 @@ const SignUp = memo(() => {
           name="password"
           rules={rulePassword}
         />
+
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -165,7 +178,7 @@ const SignUp = memo(() => {
               onBlur={onBlur}
               onChangeText={onChange}
               status={errors.password ? 'danger' : 'primary'}
-              placeholder="כתובת מגורים"
+              placeholder="כתובת מגורים- רחוב, מספר, עיר"
               style={styles.input}
               textAlign="right"
 
@@ -174,46 +187,22 @@ const SignUp = memo(() => {
           )}
           name="address"
         />
-        {/* <Controller
 
+        <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-            style={styles.DatePicker}
-              onBlur={onBlur}
-              status={errors.password ? 'danger' : 'primary'}
-              placeholder="בחרי תאריך לידה"
-              max={maxDate}
-              min={minDate}
-              onSelect={(nextDate) => setDate(nextDate)}
-              //backdropStyle={styles.DatePickerBack}
-              accessoryRight={CalendarIcon}
-              size='medium'
-              placement={'right start'}
-            />
+            <View style={styles.imageContainer}>
+              {image && <Image source={{ uri: image }} style={styles.Image} />}
+
+              <Button children="בחרי תמונת פרופיל" onPress={pickImage} />
+            </View>
           )}
-          name="birthday"
-        /> */}
-        {/* <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-              style={styles.DatePicker}
-              date={date}
-              
-              max={maxDate}
-              min={minDate}
-              size="small"
-              backdropStyle={styles.DatePickerBack}
-              onSelect={(nextDate) => setDate(nextDate)}
-            />
-          )}
-          name="birthday"
-        /> */}
+          name="picture"
+        />
 
         <Button style={styles.button} children="הרשמה" onPress={() => setRegistered(true)} />
-      </ScrollView>
-    </AuthLayout>
+      </AuthLayout>
+    </ScrollView>
   );
 });
 
@@ -233,5 +222,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     padding: 10,
     alignSelf: 'flex-end',
+  },
+  imageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  Image: {
+    width: 200,
+    height: 200,
   },
 });
