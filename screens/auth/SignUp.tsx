@@ -45,21 +45,22 @@ const SignUp = memo(() => {
   }, []);
 
   return (
-    <AuthLayout
-      show_logo
-      title="הצטרפי לקהילה"
-      bottom_content={{
-        title: ['כבר יש לך חשבון? ', 'התחברי'],
-        onPress: () => goBack(),
-      }}
-      is_success={isRegistered}
-      modal_content={{
-        title: t('common:success'),
-        description: t('sign_up:sign_up_success'),
-        title_button: t('sign_up:go_to_shopping_now'),
-        onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
-      }}>
-      <ScrollView>
+    <ScrollView>
+      <AuthLayout
+        show_logo
+        title="הצטרפי לקהילה"
+        bottom_content={{
+          title: ['כבר יש לך חשבון? ', 'התחברי'],
+          onPress: () => goBack(),
+        }}
+        is_success={isRegistered}
+        // modal_content={{
+        //   title: t('common:success'),
+        //   description: t('sign_up:sign_up_success'),
+        //   title_button: t('sign_up:go_to_shopping_now'),
+        //   onPress: () => navigate('Drawer', { screen: 'MainBottomTab' }),
+        // }}>
+      >
         <Controller
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
@@ -68,10 +69,11 @@ const SignUp = memo(() => {
               accessoryRight={(props) => <Icon pack="assets" name="user" {...props} />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.input}
               onChangeText={onChange}
               status={errors.email ? 'danger' : 'primary'}
               placeholder="שם מלא"
+              style={styles.input}
+              textAlign="right"
               //caption={errors.email ? t('numberFormatError').toString() : ''}
             />
           )}
@@ -86,10 +88,11 @@ const SignUp = memo(() => {
               accessoryRight={<Icon name="email" />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.input}
               onChangeText={onChange}
               status={errors.email ? 'danger' : 'primary'}
               placeholder="המייל שלך"
+              style={styles.input}
+              textAlign="right"
               //caption={errors.email ? t('numberFormatError').toString() : ''}
             />
           )}
@@ -104,9 +107,10 @@ const SignUp = memo(() => {
               accessoryRight={(props) => <Icon pack="assets" name="phone" {...props} />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.input}
               onChangeText={onChange}
               placeholder="מספר טלפון"
+              style={styles.input}
+              textAlign="right"
             />
           )}
           name="phone"
@@ -119,10 +123,12 @@ const SignUp = memo(() => {
               accessoryRight={(props) => <Icon pack="assets" name="lock" {...props} />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.inputPassword}
               onChangeText={onChange}
               status={errors.password ? 'danger' : 'primary'}
               placeholder="סיסמה"
+              style={styles.inputPassword}
+              textAlign="right"
+
               //caption={errors.password ? t('numberFormatError').toString() : ''}
             />
           )}
@@ -136,10 +142,12 @@ const SignUp = memo(() => {
               accessoryRight={(props) => <Icon pack="assets" name="exchange" {...props} />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.inputPassword}
               onChangeText={onChange}
               status={errors.re_password ? 'danger' : 'primary'}
               placeholder="אימות הסיסמה"
+              style={styles.inputPassword}
+              textAlign="right"
+
               //caption={errors.password ? t('numberFormatError').toString() : ''}
             />
           )}
@@ -154,55 +162,21 @@ const SignUp = memo(() => {
               accessoryRight={(props) => <Icon pack="assets" name="home" {...props} />}
               value={value ? `${value}` : ''}
               onBlur={onBlur}
-              style={styles.input}
               onChangeText={onChange}
               status={errors.password ? 'danger' : 'primary'}
               placeholder="כתובת מגורים"
+              style={styles.input}
+              textAlign="right"
+
               //caption={errors.password ? t('numberFormatError').toString() : ''}
             />
           )}
           name="address"
         />
-        {/* <Controller
-
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-            style={styles.DatePicker}
-              onBlur={onBlur}
-              status={errors.password ? 'danger' : 'primary'}
-              placeholder="בחרי תאריך לידה"
-              max={maxDate}
-              min={minDate}
-              onSelect={(nextDate) => setDate(nextDate)}
-              //backdropStyle={styles.DatePickerBack}
-              accessoryRight={CalendarIcon}
-              size='medium'
-              placement={'right start'}
-            />
-          )}
-          name="birthday"
-        /> */}
-        {/* <Controller
-          control={control}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Datepicker
-              style={styles.DatePicker}
-              date={date}
-              
-              max={maxDate}
-              min={minDate}
-              size="small"
-              backdropStyle={styles.DatePickerBack}
-              onSelect={(nextDate) => setDate(nextDate)}
-            />
-          )}
-          name="birthday"
-        /> */}
 
         <Button style={styles.button} children="הרשמה" onPress={() => setRegistered(true)} />
-      </ScrollView>
-    </AuthLayout>
+      </AuthLayout>
+    </ScrollView>
   );
 });
 
@@ -210,7 +184,6 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   input: {
-    textAlign: 'right',
     marginTop: 32,
   },
   inputPassword: {
@@ -218,5 +191,10 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 32,
+  },
+  placeholderArticle: {
+    backgroundColor: 'lightgray',
+    padding: 10,
+    alignSelf: 'flex-end',
   },
 });
